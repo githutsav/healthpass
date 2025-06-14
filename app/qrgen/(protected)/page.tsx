@@ -4,7 +4,10 @@ import { useState } from 'react';
 import QRCode from 'react-qr-code';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
-import { useAuthUser } from '.useAuthUser'; 
+import ProtectedRoute from '@/components/ProtectedRoute'; 
+import { useAuth } from '@/context/AuthContect'; 
+import { useEffect } from "react";
+import { query, where, getDocs, updateDoc, doc } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBICPFooH7cH1drdip8GuW2w2oh3kV7VWI",
@@ -24,15 +27,19 @@ export default function Home() {
     bloodGroup: '',
     allergies: '',
     medications: '',
+    medicalHistory: '',
+    emergencyContactName: '',
     emergencyContact: '',
+
   });
   const [qrValue, setQrValue] = useState('');
   const [docId, setDocId] = useState('');
+  const { user } = useAuth();
 
  const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const docRef = await addDoc(collection(db, 'health_passports'), formData);
+      const docRef = await addDoc(collection(db, 'health_passports'), {...formData, ownerId: user.uid,});
       setDocId(docRef.id);
       setQrValue(`https://yourdomain.com/passport/${docRef.id}`);
     } catch (err) {
@@ -43,6 +50,7 @@ export default function Home() {
 
 
   return (
+    <ProtectedRoute>
     <main className="flex flex-col items-center justify-center min-h-screen p-4">
       <h1 className="text-3xl font-bold mb-4">HealthChain: Emergency Health Passport</h1>
 
@@ -73,6 +81,7 @@ export default function Home() {
         </div>
       )}
     </main>
+  </ProtectedRoute>
   );
 
 }

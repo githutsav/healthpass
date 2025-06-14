@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { auth } from '../firebase.js';
+import { auth } from '@/lib/firebase'; 
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export default function LoginPage() {
@@ -14,7 +14,7 @@ export default function LoginPage() {
   const [error, setError] = useState('');
 
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
 
     try {
