@@ -88,15 +88,15 @@ export default function Home() {
           </a>
         </div>
 
-        {/* <div className="md:w-1/2 mt-10 md:mt-0 ml-60">
+        <div className="md:w-1/2 mt-10 md:mt-0 ml-60">
           <Image
-            src="./images/qr.jpeg" // Save your image as doctor.png inside /public/images
+            src="/images/qr.png" // Save your image as doctor.png inside /public/images
             alt="QR-Based Access to Your Health Data"
             width={300}
             height={200}
             className="rounded-xl shadow-lg"
           />
-        </div> */}
+        </div> 
       </section>
 
     </main>
